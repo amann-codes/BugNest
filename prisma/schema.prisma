@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String    @id @default(cuid())
+  name            String
+  email           String    @unique
+  password        String?
+  role            Role
+  Account         Account[]
+  issueCreated    Issue[]   @relation("issuesCreated") // issue created by the user
+  issuesAssigned  Issue[]   @relation("assignedIssues") // issue assigned to the developer
+  projects        Project[] @relation("UserProjects") // projects the user is part of
+  projectsCreated Project[] @relation("ProjectCreator") // projects created by the developer
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Project {
+  id        String   @id @default(cuid())
+  title     String
+  priority  priority
+  createdBy String
+  creator   User     @relation("ProjectCreator", fields: [createdBy], references: [id]) // developer who created the project
+  users     User[]   @relation("UserProjects") // user associated with this project
+  issues    Issue[]  @relation("ProjectIssues") // issues in the project
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Issue {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  status      status
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  creatorId   String
+  creator     User     @relation("issuesCreated", fields: [creatorId], references: [id]) // creator of the issue
+  assignedTo  String? // nullabe reference for the developer assigned to resolve the issue
+  assignee    User?    @relation("assignedIssues", fields: [assignedTo], references: [id]) // developer assigned to the issue
+  projectId   String
+  project     Project  @relation("ProjectIssues", fields: [projectId], references: [id]) // project to which this issue belongs
+}
+
+enum status {
+  new
+  in_progress
+  resolved
+}
+
+enum priority {
+  low
+  medium
+  high
+}
+
+enum Role {
+  user
+  developer
+}
