@@ -12,7 +12,9 @@ model User {
   name            String
   email           String    @unique
   password        String?
-  role            Role
+  role            Role?
+  emailVerified   DateTime?
+  image           String?
   Account         Account[]
   issueCreated    Issue[]   @relation("issuesCreated") // issue created by the user
   issuesAssigned  Issue[]   @relation("assignedIssues") // issue assigned to the developer
@@ -32,9 +34,11 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([provider, providerAccountId])
 }
