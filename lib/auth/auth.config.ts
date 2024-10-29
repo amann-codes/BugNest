@@ -2,7 +2,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import { NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google";
-import bcrypt from "bcrypt";
+import bcrypt from 'bcryptjs';
 import Credentials from "next-auth/providers/credentials";
 const prisma = new PrismaClient();
 export const authOptions = {
@@ -74,7 +74,6 @@ export const authOptions = {
   pages:{
     signIn:'/signin'
   },
-  secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
   },
