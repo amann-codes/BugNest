@@ -2,8 +2,8 @@ import React from "react";
 
 export default function Searchbar() {
   return (
-    <div className="w-1/2 p-2 bg-[#3274a9] flex flex-row rounded-lg justify-between items-center">
-      <p className="text-white p-2">
+    <div className="w-1/2 h-max py-2 bg-[#3274a9] flex flex-row rounded-lg border-2 justify-between items-center">
+      <p className="text-white">
         Search
       </p>
       <svg
