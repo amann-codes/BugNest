@@ -2,7 +2,7 @@ import React from "react";
 
 export default function View() {
   return (
-    <div className="bg-[#3472a9] flex flex-row gap-x-3 rounded-lg px-4 py-2 items-center">
+    <div className="w-max h-max bg-[#3472a9] flex flex-row gap-x-3 rounded-lg px-4 py-2 items-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
