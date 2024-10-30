@@ -6,12 +6,8 @@ import View from "@/components/components/View";
 
 export default function page() {
   return (
-    <div className="w-max h-max flex flex-col gap-y-3">
-      <div className="w-full h-max flex flex-row gap-x-3">
-        <Sortbutton />
-        <View />
-        <Searchbar />
-      </div>
+    <div className="w-max h-full flex flex-col gap-y-3">
+      <div className="flex flex-row justify-between"></div>
       <IssueScreen />
     </div>
   );

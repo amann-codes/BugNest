@@ -5,7 +5,7 @@ export default function Sortbutton() {
   return (
     <Popover>
       <PopoverTrigger>
-        <div className="w-max h-full flex flex-row bg-[#3274a9] items-center gap-x-2 rounded-lg px-4 py-2">
+        <div className="w-max h-max flex flex-row bg-[#3274a9] items-center gap-x-2 rounded-lg px-4 py-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
