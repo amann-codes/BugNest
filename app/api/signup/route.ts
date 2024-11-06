@@ -1,46 +1,49 @@
 import prisma from "@/prisma/prisma";
 import zod from "zod";
-import bcrypt from "bcrypt";
+import { hash } from "bcryptjs";
 export async function POST(req: Request) {
-  const FormSchema = zod.object({
-    name: zod.string(),
-    email: zod.string().email(),
-    password: zod.string().min(6, {
-      message: "password must be at least 6 character",
-    }),
-  });
   try {
+    const userSchema = zod.object({
+      name: zod.string(),
+      email: zod.string().email(),
+      password: zod.string().min(6),
+    });
     const body = await req.json();
-    const { name, email, password } = body;
-    const parsedInput = FormSchema.parse(body);
-    const existingUser = await prisma.user.findFirst({
+    const { name, email, password } = userSchema.parse(body);
+    console.log("bodyyyy", body);
+    const existingUser = await prisma.user.findUnique({
       where: {
-        email: parsedInput.email,
+        email,
       },
     });
+    console.log("existing user data", existingUser);
     if (existingUser) {
       return Response.json({
-        message: "user with this email id already exists",
+        user: null,
+        message: "user already exists on this email",
       });
     }
-    const passhash = await bcrypt.hash(parsedInput.password, 10);
-    const createUser = await prisma.user.create({
+    const passhash = await hash(password, 10);
+    const result = await prisma.user.create({
       data: {
         name,
         email,
         password: passhash,
       },
     });
-    if (!createUser) {
-      console.log(createUser);
-      return Response.json({
-        message: "error occurred",
-      });
-    }
+    console.log("result::", result);
     return Response.json({
       message: "user created successfully",
+      result,
     });
   } catch (e) {
-    console.log(e);
+    console.log("errorsss:", e);
+    return Response.json({ error: e });
   }
+}
+export async function GET() {
+  const users = await prisma.user.findMany();
+  const response = JSON.stringify(users);
+  console.log(response);
+  return Response.json(response);
 }
