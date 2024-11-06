@@ -69,8 +69,9 @@ export default function SignIn() {
           </div>
           <div className="flex flex-col gap-y-10 w-full">
             <form className="flex flex-col w-full gap-y-3">
-              <label className="text-xl text-white font-semibold">Email</label>
+              <label htmlFor="email" className="text-xl text-white font-semibold">Email</label>
               <input
+              id="email"
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
@@ -78,13 +79,14 @@ export default function SignIn() {
                 placeholder="user12@sdf.com"
                 className="w-full flex flex-row justify-center items-center rounded-[4px] bg-white px-4 py-2  text-lg font-bold focuse:outline-4 focus:outline-white caret-[#3274a9]"
               ></input>
-              <label className="text-xl text-white font-semibold">
+              <label htmlFor="password" className="text-xl text-white font-semibold">
                 Password
               </label>
               <input
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
+                id="password"
                 type="password"
                 placeholder="Fdfr@134$$"
                 className="w-full flex flex-row justify-center items-center rounded-[4px] bg-white px-4 py-2  text-lg font-bold focuse:outline-4 focus:outline-white caret-[#3274a9]"
