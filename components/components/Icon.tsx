@@ -3,6 +3,7 @@ interface IconProps {
   width: string;
   height: string;
   fontSize: string;
+  borderRadius: string;
 }
 
 const getInitials = (name: string) => {
@@ -14,11 +15,11 @@ const getInitials = (name: string) => {
     .toUpperCase();
 };
 
-const Icon = ({ name, width, height, fontSize }: IconProps) => {
+const Icon = ({ name, width, height, fontSize, borderRadius }: IconProps) => {
   return (
     <div
       style={{ width: `${width}px`, height: `${height}px` }}
-      className={`flex justify-center items-center text-${fontSize} font-smeibold text-black p-1 rounded-full bg-white`}
+      className={`flex justify-center items-center text-${fontSize} font-smeibold text-black p-1 rounded-${borderRadius} bg-white`}
     >
       {getInitials(name)}
     </div>
