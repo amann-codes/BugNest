@@ -12,15 +12,22 @@ import Project from "./Project";
 
 interface Projects {
   title: string;
+  id: string;
 }
 
-export default function Projects() {
+interface selectProjectProps {
+  onSelectProject: (projectId: string) => void;
+}
+
+const pushId = () => {};
+
+export default function Projects({ onSelectProject }: selectProjectProps) {
   const [title, setTitle] = useState("");
   const [projects, setProjects] = useState<Projects[]>([]);
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await fetch("/api/create/project", {
+        const res = await fetch("/api/project/get", {
           method: "GET",
           headers: { "Content-Type": "application/json" },
         });
@@ -34,10 +41,10 @@ export default function Projects() {
     fetchProjects();
   }, []);
   return (
-    <div className="h-max overflow-x-auto px-2 gap-x-3 py-2 rounded-lg bg-[#3274a9] text-white text-xl font-semibold">
+    <div className="max-h-[594px] w-max p-3 overflow-y-auto overflow-x-hidden rounded-lg bg-[#3274a9] text-white text-xl font-semibold">
       <Dialog>
         <DialogTrigger asChild>
-          <Plus className="bg-[#1a287e] size-10 rounded-lg p-1 text-white" />
+          <Plus className="bg-[#1a287e] size-[45px] rounded-lg p-1 mb-3 text-white" />
         </DialogTrigger>
         <DialogContent className="bg-[#3274a9] border-black">
           <DialogTitle>Create Project</DialogTitle>
@@ -58,7 +65,7 @@ export default function Projects() {
                 className="py-2 px-4 text-white bg-slate-900 mt-3 rounded-md"
                 onClick={async () => {
                   try {
-                    const res = await fetch("/api/create/project", {
+                    const res = await fetch("/api/project/create", {
                       method: "POST",
                       headers: { "Content-type": "applicaiton/json" },
                       body: JSON.stringify({
@@ -77,9 +84,19 @@ export default function Projects() {
           </div>
         </DialogContent>
       </Dialog>
-      <div className="h-max flex flex-col items-center gap-x-3 overflow-x-auto m-2">
+      <div className="h-max w-max flex flex-col items-center gap-y-2 overflow-x-auto">
         {projects.map((items, index) => {
-          return <Project key={index} title={items.title} />;
+          return (
+            <div
+              key={index}
+              onClick={() => {
+                onSelectProject(items.id);
+                console.log(items.id);
+              }}
+            >
+              <Project title={items.title} />
+            </div>
+          );
         })}
       </div>
     </div>
