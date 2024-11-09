@@ -25,6 +25,7 @@ export default function Info() {
             width="40"
             height="40"
             fontSize="xl"
+            borderRadius="full"
           ></Icon>
         </PopoverTrigger>
         <PopoverContent className="w-max -translate-x-[5%] mt-2 bg-black/70 flex flex-col gap-y-4 border-transparent">
@@ -34,6 +35,7 @@ export default function Info() {
               width="50"
               height="50"
               fontSize="2xl"
+              borderRadius="md"
             ></Icon>
             <div className="flex flex-col justify-start">
               <p className="text-xl font-semibold text-white ">
