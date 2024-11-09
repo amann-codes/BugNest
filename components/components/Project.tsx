@@ -7,6 +7,14 @@ interface ProjectProps {
 
 export default function Project({ title }: ProjectProps) {
   return (
-    <Icon width="50" height="50" fontSize="xl" borderRadius="md" name={title} />
+    <div>
+      <Icon
+        width="45"
+        height="45"
+        fontSize="xl"
+        borderRadius="md"
+        name={title}
+      />
+    </div>
   );
 }
