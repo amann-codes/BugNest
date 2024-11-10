@@ -10,6 +10,7 @@ interface Issues {
   title: string;
   description: string;
   status: string;
+  priority: string;
 }
 
 interface IssueScreenProps {
@@ -34,29 +35,29 @@ export default function IssueScreen({ projectId }: IssueScreenProps) {
   }, [projectId]);
 
   return (
-    <div className="w-full h-max">
-      <div>
+    <div className="w-full h-full">
         <div className="w-full h-[60px] flex flex-row gap-3 mb-3">
           <CreateIssue projectId={projectId} onIssueCreated={fetchIssuse} />
           <Sortbutton />
           <View />
         </div>
-      </div>
       <div className="bg-[#3274a9] rounded-lg p-8">
         <p className="w-full h-max mb-3">
           Project logo, name, creator, description
         </p>
-        <div className="h-[422px] overflow-y-auto flex flex-wrap items-center justify-center gap-3 px-2">
+        <div className="h-[358px] overflow-y-auto flex flex-wrap items-center justify-start gap-3 px-2">
           {issues.map((items, index) => {
             return (
               <div key={index}>
                 <Box
+                  priority={items.priority}
                   title={items.title}
                   description={items.description}
                   status={items.status}
                 />
                 {box && (
                   <Box
+                    priority={items.priority}
                     title={items.title}
                     description={items.description}
                     status={items.status}
